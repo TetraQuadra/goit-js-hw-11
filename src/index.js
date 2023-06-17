@@ -3,7 +3,6 @@ import apiConfig from './config';
 import executeWithLoader from './js/services/executeWithLoader';
 import SlimSelect from 'slim-select';
 import fetchBreeds from './js/services/fetchBreeds';
-import fetchCats from './js/services/fetchCats';
 import {
   ButtonEl,
   ButtonFetchBreedsEl,
