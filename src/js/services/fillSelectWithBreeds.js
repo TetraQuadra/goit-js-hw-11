@@ -12,6 +12,7 @@ const fillSelectWithBreeds = async () => {
     SelectBreeds.appendChild(optionElement);
   });
   new SlimSelect({ select: '#breed-select' });
+  SelectBreeds.classList.remove('is-hidden');
 };
 
 export default fillSelectWithBreeds;
