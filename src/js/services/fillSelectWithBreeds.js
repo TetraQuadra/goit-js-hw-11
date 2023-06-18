@@ -4,6 +4,9 @@ import { fetchBreeds } from './catApi';
 
 const fillSelectWithBreeds = async () => {
   const data = await fetchBreeds();
+  if (!data) {
+    return;
+  }
   SelectBreeds.innerHTML = '<option value=""></option>';
   data.forEach(breed => {
     const optionElement = document.createElement('option');

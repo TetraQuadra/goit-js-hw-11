@@ -12,7 +12,6 @@ import fillSelectWithBreeds from './js/services/fillSelectWithBreeds';
 import assignCatInfo from './js/services/assignCatInfo';
 import Notiflix from 'notiflix';
 import { fetchCatByBreed } from './js/services/catApi';
-
 executeWithLoader(async () => await fillSelectWithBreeds());
 
 SelectBreeds.addEventListener('change', async event => {

@@ -14,6 +14,7 @@ const fetchBreeds = () => {
       Notiflix.Notify.failure(
         'Something gone wrong, check internet connection and refresh page'
       );
+      console.log('first');
     });
 };
 
