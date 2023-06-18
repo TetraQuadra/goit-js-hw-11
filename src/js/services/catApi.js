@@ -7,9 +7,19 @@ const fetchBreeds = async () => {
     method: 'GET',
     params: '',
   });
-  console.log(response);
   if (response.status === 200) {
     return response;
   }
 };
-export default fetchBreeds;
+
+const fetchCatByBreed = async e => {
+  console.log(e);
+  const response = await fetchData({
+    path: apiConfig.path.search,
+    params: `?breed_ids=${e.target.value}`,
+    apiKey: apiConfig.apiKey,
+  });   
+  return response;
+};
+
+export { fetchCatByBreed, fetchBreeds };

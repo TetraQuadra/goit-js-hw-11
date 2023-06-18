@@ -1,6 +1,6 @@
 import SlimSelect from 'slim-select';
 import { SelectBreeds } from '../querrySelectors';
-import fetchBreeds from './fetchBreeds';
+import { fetchBreeds } from './catApi';
 
 const fillSelectWithBreeds = async () => {
   const data = await fetchBreeds();

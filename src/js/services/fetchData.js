@@ -1,27 +1,33 @@
 import Notiflix from 'notiflix';
 import apiConfig from '../../config';
 
-async function fetchData({ path, method = 'GET', params = '', apiKey = '' }) {
-  try {
-    const response = await fetch(
-      `${apiConfig.apiMainPath}${path}${params}${apiKey}`,
-      {
-        method: method,
+function fetchData({ path, method = 'GET', params = '', apiKey = '' }) {
+  return fetch(`${apiConfig.apiMainPath}${path}${params}${apiKey}`, {
+    method: method,
+  })
+    .then(response => {
+      if (!response.ok) {
+        return response
+          .clone()
+          .json()
+          .then(data => {
+            Notiflix.Notify.failure("Something gone wrong, check internet connection and refresh page");
+            throw new Error(data.message);
+          });
       }
-    );
-    if (!response.ok) {
-      const clonedResponse = response.clone();
-      const data = await clonedResponse.json();
-      return Notiflix.Notify.failure(data.message);
-    }
-    const data = await response.json();
-    if (typeof data === 'object') {
-      data.status = response.status;
-    }
-    return data;
-  } catch (error) {
-    return Notiflix.Notify.failure(error.message);
-  }
+      return response.json().then(data => {
+        if (typeof data === 'object') {
+          data.status = response.status;
+        }
+        return data;
+      });
+    })
+    .catch(error => {
+      Notiflix.Notify.failure(
+        'Something gone wrong, check internet connection and refresh page'
+      );
+      throw error;
+    });
 }
 
 export { fetchData };
