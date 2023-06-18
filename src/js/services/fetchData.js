@@ -11,8 +11,9 @@ function fetchData({ path, method = 'GET', params = '', apiKey = '' }) {
           .clone()
           .json()
           .then(data => {
-            Notiflix.Notify.failure("Something gone wrong, check internet connection and refresh page");
-            throw new Error(data.message);
+            Notiflix.Notify.failure(
+              'Something gone wrong, check internet connection and refresh page'
+            );
           });
       }
       return response.json().then(data => {
@@ -26,7 +27,6 @@ function fetchData({ path, method = 'GET', params = '', apiKey = '' }) {
       Notiflix.Notify.failure(
         'Something gone wrong, check internet connection and refresh page'
       );
-      throw error;
     });
 }
 
