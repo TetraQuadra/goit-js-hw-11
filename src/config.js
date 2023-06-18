@@ -4,7 +4,7 @@ const apiConfig = {
   apiMainPath: 'https://api.thecatapi.com/v1/',
   path: {
     search: 'images/search',
-    breeds: 'breeыds',
+    breeds: 'breeds',
   },
 };
 
