@@ -13,7 +13,6 @@ const fetchBreeds = async () => {
 };
 
 const fetchCatByBreed = async e => {
-  console.log(e);
   const response = await fetchData({
     path: apiConfig.path.search,
     params: `?breed_ids=${e.target.value}`,

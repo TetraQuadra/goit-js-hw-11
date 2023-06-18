@@ -5,7 +5,6 @@ const assignCatInfo = data => {
   if (!data) {
     return;
   }
-  console.log(data);
   CatImageContainer.innerHTML = '';
   CatDescriptionEl.innerHTML = '';
   const imgElement = document.createElement('img');
