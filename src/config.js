@@ -1,11 +1,6 @@
 const apiConfig = {
-  apiKey:
-    '&api_key=live_SPSUtFyT4Pf7tGJcxbcGFsSmnDCGDrA6Hho0c1Ol4AqnMJMm8mMdvoJpUlJqxnkD',
-  apiMainPath: 'https://api.thecatapi.com/v1/',
-  path: {
-    search: 'images/search',
-    breeds: 'breeds',
-  },
+  apiKey: 'key=37827643-46ba8cabf7a0d31c7cfccc6a2',
+  apiMainPath: 'https://pixabay.com/api/',
 };
 
 export default apiConfig;

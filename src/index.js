@@ -1,22 +1,47 @@
-import { fetchData } from './js/services/fetchData';
-import apiConfig from './config';
 import executeWithLoader from './js/services/executeWithLoader';
-import SlimSelect from 'slim-select';
-import {
-  ButtonEl,
-  ButtonFetchBreedsEl,
-  SelectBreeds,
-} from './js/querrySelectors';
-import { async } from '@vimeo/player';
-import fillSelectWithBreeds from './js/services/fillSelectWithBreeds';
-import assignCatInfo from './js/services/assignCatInfo';
 import Notiflix from 'notiflix';
-import { fetchCatByBreed } from './js/services/catApi';
-executeWithLoader(async () => await fillSelectWithBreeds());
+import {
+  form,
+  gallery,
+  input,
+  lightbox,
+  loadMoreButton,
+} from './js/querrySelectors';
+import { fetchImage } from './js/services/api';
+import createCards from './js/services/createCards';
 
-SelectBreeds.addEventListener('change', async event => {
+var page = 1;
+
+form.addEventListener('submit', async event => {
+  event.preventDefault();
+  if (!input.value) {
+    Notiflix.Notify.warning(
+      'You didnt typed anything in search field, here is some random pictures'
+    );
+  }
   await executeWithLoader(async () => {
-    const cat = await fetchCatByBreed(event);
-    assignCatInfo(cat);
+    const images = await fetchImage(input.value, '1');
+    console.log(images);
+    if (images.total == 0) {
+      Notiflix.Notify.failure('Nothing found');
+    }
+    const galleryHtml = createCards(images.hits);
+    gallery.innerHTML = galleryHtml;
+    loadMoreButton.classList.remove('hidden');
+    lightbox.refresh();
   });
+});
+
+loadMoreButton.addEventListener('click', async () => {
+  const images = await fetchImage(input.value, page);
+  console.log(images);
+  if (images.total == 0) {
+    Notiflix.Notify.failure('Nothing found');
+    loadMoreButton.classList.add('hidden');
+  }
+  const galleryHtml = createCards(images.hits);
+  const currentGallery = document.querySelector('.gallery');
+  gallery.innerHTML = `${currentGallery.innerHTML} ${galleryHtml}`;
+  lightbox.refresh();
+  page++;
 });
