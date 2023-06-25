@@ -4,9 +4,6 @@ import requestToParam from './requestToParam';
 
 const fetchImage = (request, page) => {
   const modifiedReq = requestToParam(request);
-  console.log(
-    `?${apiConfig.apiKey}&orientation=horizontal&safesearch=true&image_type=photo&q=${modifiedReq}&page=${page}`
-  );
   return fetchData({
     path: '',
     method: 'GET',
