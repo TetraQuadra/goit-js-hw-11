@@ -23,8 +23,12 @@ form.addEventListener('submit', async event => {
     const images = await fetchImage(input.value, '1');
     console.log(images);
     if (images.total == 0) {
-      Notiflix.Notify.failure('Nothing found');
+      Notiflix.Notify.failure(
+        'Sorry, there are no images matching your search query. Please try again'
+      );
+      return;
     }
+    Notiflix.Notify.success(`Hooray! We found ${images.total} images.`);
     const galleryHtml = createCards(images.hits);
     gallery.innerHTML = galleryHtml;
     loadMoreButton.classList.remove('hidden');
