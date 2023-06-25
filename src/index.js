@@ -33,6 +33,7 @@ form.addEventListener('submit', async event => {
 });
 
 loadMoreButton.addEventListener('click', async () => {
+  page++;
   const images = await fetchImage(input.value, page);
   console.log(images);
   if (images.total == 0) {
@@ -43,5 +44,4 @@ loadMoreButton.addEventListener('click', async () => {
   const currentGallery = document.querySelector('.gallery');
   gallery.innerHTML = `${currentGallery.innerHTML} ${galleryHtml}`;
   lightbox.refresh();
-  page++;
 });
