@@ -11,37 +11,52 @@ import { fetchImage } from './js/services/api';
 import createCards from './js/services/createCards';
 
 var page = 1;
+var totalCounter = 0;
 
 form.addEventListener('submit', async event => {
   event.preventDefault();
+  gallery.innerHTML = '';
   if (!input.value) {
-    Notiflix.Notify.warning(
-      'You didnt typed anything in search field, here is some random pictures'
-    );
+    Notiflix.Notify.failure('You need to type something in search field');
+    return;
   }
   await executeWithLoader(async () => {
+    totalCounter = 40;
     const images = await fetchImage(input.value, '1');
-    console.log(images);
+
+    if (images.totalHits > totalCounter) {
+      loadMoreButton.classList.remove('hidden');
+    }
+
+    if (images.totalHits < totalCounter) {
+      loadMoreButton.classList.add('hidden');
+    }
+
     if (images.total == 0) {
       Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again'
       );
       return;
     }
-    Notiflix.Notify.success(`Hooray! We found ${images.total} images.`);
+
+    Notiflix.Notify.success(`Hooray! We found ${images.totalHits} images.`);
     const galleryHtml = createCards(images.hits);
     gallery.innerHTML = galleryHtml;
-    loadMoreButton.classList.remove('hidden');
+
     lightbox.refresh();
   });
 });
 
 loadMoreButton.addEventListener('click', async () => {
+  totalCounter += 40;
   page++;
+
   const images = await fetchImage(input.value, page);
-  console.log(images);
   if (images.total == 0) {
     Notiflix.Notify.failure('Nothing found');
+    loadMoreButton.classList.add('hidden');
+  }
+  if (images.totalHits < totalCounter) {
     loadMoreButton.classList.add('hidden');
   }
   const galleryHtml = createCards(images.hits);
