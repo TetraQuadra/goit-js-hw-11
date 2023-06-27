@@ -21,6 +21,7 @@ form.addEventListener('submit', async event => {
     return;
   }
   await executeWithLoader(async () => {
+    page = 1
     totalCounter = 40;
     const images = await fetchImage(input.value, '1');
 
@@ -58,6 +59,7 @@ loadMoreButton.addEventListener('click', async () => {
   }
   if (images.totalHits < totalCounter) {
     loadMoreButton.classList.add('hidden');
+     Notiflix.Notify.success(`All founded images are loaded!`);
   }
   const galleryHtml = createCards(images.hits);
   const currentGallery = document.querySelector('.gallery');
