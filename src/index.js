@@ -16,14 +16,14 @@ var totalCounter = 0;
 form.addEventListener('submit', async event => {
   event.preventDefault();
   gallery.innerHTML = '';
-  if (!input.value) {
+  if (!input.value.trim()) {
     Notiflix.Notify.failure('You need to type something in search field');
     return;
   }
   await executeWithLoader(async () => {
     page = 1
     totalCounter = 40;
-    const images = await fetchImage(input.value, '1');
+    const images = await fetchImage(input.value.trim(), '1');
 
     if (images.totalHits > totalCounter) {
       loadMoreButton.classList.remove('hidden');
@@ -52,7 +52,7 @@ loadMoreButton.addEventListener('click', async () => {
   totalCounter += 40;
   page++;
 
-  const images = await fetchImage(input.value, page);
+  const images = await fetchImage(input.value.trim(), page);
   if (images.total == 0) {
     Notiflix.Notify.failure('Nothing found');
     loadMoreButton.classList.add('hidden');
